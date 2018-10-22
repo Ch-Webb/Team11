@@ -16,6 +16,22 @@ def filter_words(words, skip_words):
         if i not in skip_words:
             important_words.append(i)
     return important_words
+def remove_spaces(text):
+    letterFound = False
+    for letter in text:
+        if (letter.isalpha()) or (letter.isdigit()):
+            letterFound = True
+    if letterFound == True:
+        left = 0
+        right = -1
+        while text[left].isspace():
+            left += 1
+        while text[right].isspace():
+            right -= 1
+        right += 1
+        return text[left:right or None]
+    else:
+        return ""
 def remove_punct(text):
     no_punct = ""
     for char in text:
@@ -25,7 +41,8 @@ def remove_punct(text):
 def normalise_input(user_input):
     # Remove punctuation and convert to lower case
     no_punct = remove_punct(user_input).lower()
-    list_of_words = no_punct.split()
+    no_spaces = remove_spaces(no_punct)
+    list_of_words = no_spaces.split()
     important_words = filter_words(list_of_words, skip_words)
     return important_words
 
@@ -112,9 +129,23 @@ def print_menu(area_items, inv_items):
 
 def print_exits():
 
-    for i in rooms:
-        print("GO TO "+ i)
+    for key in rooms:
+            print("GO TO "+ key)
 
+def execute_drop(item_id):
+    found = False
+    item = None
+    for key in inventory:
+        if item_id == key["id"]:
+            item = key
+        
+    for element in inventory:
+        if item_id == element["id"]:
+            inventory.remove(element)
+            current_area["items"].append(element)
+            found = True
+    if found == False:
+        print("You cannot drop that")
 
 def execute_command(command):
 
@@ -137,17 +168,24 @@ def execute_command(command):
             print("Take what?")
             input("------->PRESS ENTER TO CARRY ON<------")
 
-
+    elif command[0] == "drop":
+        if len(command) > 1:
+            execute_drop(command[1])
+        else:
+            print("Take what?")
+            input("------->PRESS ENTER TO CARRY ON<------")
     
     elif command[0] == "talk":
         if len(command) > 1:
             execute_talk(command[1])
         else:
-            print("talk to who......?")
+            print("Talk to who?")
 
     elif command[0] == "buy" and current_area == bar_area:
         if len(command) > 1:
             execute_buy()
+        else:
+            print("Buy what?")
         
 
 
@@ -232,7 +270,7 @@ def execute_take(item_id):
 
 
 
-current_area = seating_area
+current_area = booth_area
 inventory = []
 
 
@@ -241,7 +279,13 @@ inventory = []
 # This is the entry point of our program
 def main():
     #intro goes here
-    print("INTRO")
+    print("""Your eyes slowly open as you regain consciousness, still pissed and spinning.
+You’re sat at a pink leather booth.
+Around you are 4 mini-stages and 2 private rooms.
+There’s an exotic dancer entertaining countless eyes on the main stage.
+The bar tender stands tall, grinning and wiping down the last beer glass.
+In-front of him are 7 stools, the very last filled by a man drinking Russian Vodka.
+He seems familiar.""")
     # Main game loop
     while True:
         # Display game status (room description, inventory etc.)

@@ -9,7 +9,7 @@ item_drink = {
     "description":"A mixed spirit drink containing a triple shot of Smirnoff Vodka."
 }
 item_keys = {
-    "id": "key",
+    "id": "keys",
     "name": " your keys ",
     "description":"Your keys containing access to home, your car and work."
 }
