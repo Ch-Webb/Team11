@@ -1,4 +1,6 @@
 import string
+from items import *
+from areas import *
 skip_words = ['a', 'about', 'all', 'an', 'another', 'any', 'around', 'at',
               'bad', 'beautiful', 'been', 'better', 'big', 'can', 'every', 'for',
               'from', 'good', 'have', 'her', 'here', 'hers', 'his', 'how',
@@ -8,104 +10,6 @@ skip_words = ['a', 'about', 'all', 'an', 'another', 'any', 'around', 'at',
               'that', 'the', 'then', 'this', 'those', 'through', 'till', 'to',
               'towards', 'until', 'us', 'want', 'we', 'what', 'when', 'why',
               'wish', 'with', 'would' , 'area', 'got','hot','cuite']
-
-item_mates_id = {
-    "id": "mates",
-    "name": " your mates id ",
-    "description":"this is your mates, who you came to the bar with, drivers license"
-}
-item_drink = {
-    "id": "drink",
-    "name": " smirnoff vodka ",
-    "description":"A mixed spirit drink containing a triple shot of Smirnoff Vodka."
-}
-item_keys = {
-    "id": "key",
-    "name": " your keys ",
-    "description":"Your keys containing access to home, your car and work."
-}
-item_wallet = {
-    "id": "wallet",
-    "name": " your wallet ",
-    "description":"Filled with cash for the night and your bank card, freshly topped up with a brand new student loan."
-}
-item_id = {
-    "id": "id",
-    "name": " your id ",
-    "description":"Your driving license."
-}
-
-item_phone = {
-    "id": "phone",
-
-    "name": "mobile phone",
-
-    "description": "Your mobile, with 19% battery and contact numbers for peers and taxi companies."
-}
-
-items = {
-    "mates id": item_mates_id,
-    "drink": item_drink,
-    "keys": item_keys,
-    "wallet": item_wallet,
-    "id": item_id,
-    "phone": item_phone
-    }
-
-
-booth_area = {
-    "name": "booth",
-    "description":
-    """description of area""",
-    "items": [item_mates_id]
-}
-bar_area = {
-    "name": "bar",
-    "description":
-    """description of area""",
-    "items": []
-}
-table_area = {
-    "name": "table",
-
-    "description":
-    """description of area""",
-    "items": []
-}
-toilet_area = {
-    "name": "toilet",
-    "description":
-    """description of area""",
-    "items": [item_keys]
-}
-exit_area = {
-    "name": "exit",
-
-    "description":
-    """description of area""",
-    "items": []
-}
-
-seating_area = {
-    "name": "seating",
-    "description":
-    """description of area""",
-    "items": []
-    }
-
-rooms = {
-    "booth": booth_area,
-    "bar": bar_area,
-    "table": table_area,
-    "toilet": toilet_area,
-    "exit": exit_area,
-    "seating": seating_area,
-}
-
-
-
-
-
 def filter_words(words, skip_words):
     important_words = []
     for i in words:
@@ -171,8 +75,6 @@ def list_of_items(items):
             list_of_things = list_of_things + ", " + i
                     
     return list_of_things
-
-
 
 def menu(room_items, inv_items):
     # Display menu
