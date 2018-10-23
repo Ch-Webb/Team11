@@ -1,11 +1,13 @@
 from items import *
+from Characters import *
 booth_area = {
     "name": "booth",
     "description":
     """You return back to the booth.
 There are prints of your body left on the pink leather seats.
 There appears to be things sticking out of the joints of the sofa. Loose change? A phone? What could it be.""",
-    "items": [item_mates_id]
+    "items": [item_mates_id],
+    "characters":[]
     
 }
 bar_area = {
@@ -15,7 +17,8 @@ bar_area = {
 There are bottles stacked behind him and countless phones, keys, wallets and condoms in a once-new box labelled ‘lost and found’.
 On your right is your friend, Sam. He is completed pissed and is wearing a non-removable Halloween mask, given to him at birth.
 On your left is the town drunk, he never leaves.""",
-    "items": []
+    "items": [item_drink],
+    "characters":[character_bartender]
 }
 table_area = {
     "name": "table",
@@ -26,7 +29,8 @@ Her friends have abandoned her and her mascara is running.
 She stirs the olive in her empty cocktail glass.
 Suddenly, she sees you and her eyes glare up with hope.
 ‘A unicorn?’ she thinks, or another guy looking for a fling, never to call her again.""",
-    "items": []
+    "items": [],
+    "characters":[character_girl]
 }
 toilet_area = {
     "name": "toilet",
@@ -35,12 +39,13 @@ toilet_area = {
 The floor is filled with unspeakable things.
 There are three cubicles and 5 urinals.
 In the corner cages the remains of a now-empty condom disposer. """,
-    "items": [item_keys]
+    "items": [item_keys],
+    "characters": []
 }
 exit_area = {
     "name": "exit",
 
-    "description_1":
+    "description":
     """You approach the green neon exit signs.
 There is a tall, handsome Russian man there.
 He seems aggressive. You try to leave.
@@ -54,14 +59,16 @@ He grabs you and throws you through the window panes.
 It shatters and you land on the street, head spinning.
 A yellow taxi pulls up beside you, you run into it pulling the woman, half in, out. “GO!”.
     """,
-    "items": []
+    "items": [],
+    "characters":[character_bouncer]
 }
 
 seating_area = {
     "name": "seating",
     "description":
     """description of area""",
-    "items": []
+    "items": [],
+    "characters":[character_friend]
     }
 
 rooms = {

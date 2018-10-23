@@ -93,9 +93,9 @@ def list_of_items(items):
                     
     return list_of_things
 
-def menu(room_items, inv_items):
+def menu(room_items, inv_items, character):
     # Display menu
-    print_menu(room_items, inv_items)
+    print_menu(room_items, inv_items,character)
 
     # Read player's input
     user_input = input("> ")
@@ -107,12 +107,15 @@ def menu(room_items, inv_items):
 
 
 
-def print_menu(area_items, inv_items):
+def print_menu(area_items, inv_items , characters):
     print("You can:")    
     # Print the exit name 
     print_exits()
     for i in area_items :
-        print("TAKE " + i["id"].upper() + " to take " + i["name"] + ".")
+        if i == item_drink:
+            print("BUY " + i["id"].upper() + " to take " + i["name"] + ".")
+        else:
+            print("TAKE " + i["id"].upper() + " to take " + i["name"] + ".")
     for i in inv_items :
         print("DROP " + i["id"].upper() + " to drop " + i["name"] + ".")
     if current_area == bar_area:
@@ -121,7 +124,9 @@ def print_menu(area_items, inv_items):
         print("TALK to mate")
     if current_area == table_area:
         print("TALK to the girl")
-
+    for i in characters:
+        i = i["id"]
+        print("LOOK AT " + i)
 
         
     print("What do you want to do?")
@@ -155,7 +160,11 @@ def execute_command(command):
 
     if command[0] == "go":
         if len(command) > 1:
-            execute_go(command[1])
+            try:
+                execute_go(command[1])
+            except:
+                print("Go where?")
+                input("------->PRESS ENTER TO CARRY ON<------")
             
         else:
             print("Go where?")
@@ -163,43 +172,83 @@ def execute_command(command):
 
     elif command[0] == "take":
         if len(command) > 1:
-            execute_take(command[1])
+            try:
+                execute_take(command[1])
+            except:
+                print("Take what?")
+                input("------->PRESS ENTER TO CARRY ON<------")
         else:
             print("Take what?")
             input("------->PRESS ENTER TO CARRY ON<------")
 
     elif command[0] == "drop":
         if len(command) > 1:
-            execute_drop(command[1])
+            try:
+                execute_drop(command[1])
+            except:
+                print("drop what?")
+                input("------->PRESS ENTER TO CARRY ON<------")
         else:
-            print("Take what?")
+            print("drop what?")
             input("------->PRESS ENTER TO CARRY ON<------")
     
     elif command[0] == "talk":
         if len(command) > 1:
-            execute_talk(command[1])
+            try:
+                execute_talk(command[1])
+            except:
+                print("talk to who?")
+                input("------->PRESS ENTER TO CARRY ON<------")
         else:
             print("Talk to who?")
+            input("------->PRESS ENTER TO CARRY ON<------")
 
     elif command[0] == "buy" and current_area == bar_area:
         if len(command) > 1:
             execute_buy()
         else:
             print("Buy what?")
-        
 
+
+
+            
+    elif command[0] == "look":
+        if len(command) > 1:
+            try:
+                execute_look(command[1])
+            except:
+                print("look at who?")
+                input("------->PRESS ENTER TO CARRY ON<------")
+        else:
+            print("look at who?")
+            input("------->PRESS ENTER TO CARRY ON<------")   
+    
 
     
     else:
         print("This makes no sense.")
         input("------->PRESS ENTER TO CARRY ON<------")
 
+def execute_look(character):
+    a = characters[character]
+    print("there name is " + a["name"] + ", they area a " + a["description"])
+    input("------->PRESS ENTER TO CARRY ON<------")
+
+
+
+
+
+
+
 def execute_buy():
+    global inventory
     if item_wallet and item_id in inventory:
         print("BUYING drink SCRIPT")
-        inventory = inventory + item_drink
+        input("------->PRESS ENTER TO CARRY ON<------")
+        inventory.append(item_drink)
     else:
         print("GETTING REFUSED SCRIPT")
+        input("------->PRESS ENTER TO CARRY ON<------")
         
     
 
@@ -211,12 +260,22 @@ def execute_buy():
 def execute_talk(person):
     global inventory
     if person == "barman" and current_area == bar_area:
-        print("PRINT BARMAN SCRIPT")
-        input("------->PRESS ENTER TO CARRY ON<------")
+        if item_number in inventory: 
+            print("GIVE BARMAN NUMBER SCRIPT")
+            input("------->PRESS ENTER TO GIVE BARMAN THE GIRL'S NUMBER<------")
+            inventory.remove(item_number)           
+        else:         
+            print("PRINT BARMAN SCRIPT")
+            input("------->PRESS ENTER TO CARRY ON<------")
         return
-    if person == "girl"and current_area ==  table_area :
-        print("PRINT GET GIRL NUMBERS SCRIPT")
-        input("------->PRESS ENTER TO CARRY ON<------")
+    if person == "girl" and current_area ==  table_area :
+        if item_drink in inventory:
+            print("print give girl drink")
+            input("------->PRESS ENTER TO GIVE GIRL DRINK<------")
+            inventory.append(item_number)
+        else:            
+            print("PRINT GET GIRL NUMBERS SCRIPT")
+            input("------->PRESS ENTER TO CARRY ON<------")
         return
     if person == "mate" and current_area == seating_area :
         print("PRINT TALK TO MATE SCRIPT")
@@ -225,10 +284,9 @@ def execute_talk(person):
             input("------->PRESS ENTER TO GIVE HIM HIS ID<------")        
             inventory.append(item_wallet)
             inventory.append(item_id)
-            
+            inventory.remove(item_mates_id)          
         input("------->PRESS ENTER TO CARRY ON<------")
-        return
-    
+        return    
     else :
         print("talk to who.....?")
         input("------->PRESS ENTER TO CARRY ON<------")
@@ -236,14 +294,10 @@ def execute_talk(person):
 
 
 
-def execute_go(new_area):
-  
-    
+def execute_go(new_area):   
     global current_area
-
     if new_area == "booth" or "bar" or "table" or "toilet"  or "seating":
-        current_area = rooms[new_area]
-   
+        current_area = rooms[new_area]   
     else :
         print("GO where....?")
         input("------->PRESS ENTER TO CARRY ON<------")
@@ -254,19 +308,15 @@ def execute_take(item_id):
     print("")
     for i in current_area["items"]:
         y = y + 1
-
         if item_id == i["id"]:
-            x = 1
+            x = 1          
             inventory.append(i)
             del current_area["items"][y]
-                
+            print("this is " + i["description"])
+            input("------->PRESS ENTER TO CARRY ON<------")
     if x == 0:
         print("You cannot take that.")
         input("------->PRESS ENTER TO CARRY ON<------")
-    
-    
-
-
 
 
 
@@ -293,14 +343,9 @@ He seems familiar.""")
         print_room(current_area)        
         print_inventory_items(inventory)
         # Show the menu with possible actions and ask the player
-        command = menu(current_area["items"], inventory)
-        
+        command = menu(current_area["items"], inventory , current_area["characters"])        
         # Execute the player's command
         execute_command(command)
-
-        
-         
-        
         print("##############################################################################################################")
 
 main()
