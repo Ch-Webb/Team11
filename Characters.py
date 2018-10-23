@@ -1,5 +1,5 @@
 character_friend = {
-    "id": "friend",
+    "id": "mate",
 
     "name": "Jackson",
 

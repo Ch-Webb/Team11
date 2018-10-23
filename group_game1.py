@@ -47,9 +47,6 @@ def normalise_input(user_input):
     important_words = filter_words(list_of_words, skip_words)
     return important_words
 
-def print_map():
-    # map image goes here
-    print("map image")
 
 def print_room(room):
     # Display room name
@@ -201,8 +198,8 @@ def execute_command(command):
             print("Buy what?")
             
     elif command[0] == "look":
-        if len(command) > 1:
-            try:
+        if len(command) > 1:            
+            try:                
                 execute_look(command[1])
             except:
                 print("Look at who?")
@@ -292,35 +289,69 @@ def execute_take(item_id):
 
 def fight():
     global won
-    rand = random.randint(1,3)
+    
     while won == False:
         print("""You can:
     >Punch
     >Kick
     >Run
 """)
+        rand = random.randint(1,3)
         print("What will you do?")
         usermove = input()
-        if normalise_input(usermove) == "punch":
+        usermove = normalise_input(usermove)
+        if usermove == "punch":
             if rand == 1:
-                print("won")
-            else:
-                return
-        elif normalise_input(usermove) == "kick":
+                won = True                
+        elif usermove == "kick":
             if rand == 2:
-                print("won")
-            else:
-                return
-        elif normalise_input(usermove) == "run":
+                won = True               
+        elif usermove == "run":
             if rand == 3:
-                print("won")
-            else:
-                return
+                won = True
+                
         else:
             print("I do not understand")
-            input("------->PRESS ENTER TO CARRY ON<------")
-        
-        
+        print("")
+        print("THAT DID NOT WORK")
+        print("")
+    print("""
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        CONGRATS!
+        YOU HAVE DEFEATED THE BOUNCER, YOUR PHONE HAS BEEN RETURNED TO YOU
+        YOU GRAB YOUR MATE AND GET IN TO THE CAB BUT JUST BEFORE YOU LEAVE A WOMAN SHOUTS OUT,
+        ITS THE WOMAN FROM THE TABLE WHO YOU GOT THE NUMBER FROM.........
+        "THANKS FOR DEFEATING THE BOUNCER HES WAS A TWAT" SHE SAYS TO YOU AND ASKED TO COME BACK TO YOURS
+        UNDERSTANDING WHATS GOING ON YOU MATE JUMPS OUT THE CAB AND SAYS HE WILL BE FINE HES NOT IN A STATE LIKE YOU,
+        WITH THIS YOU LEAVE AND DRIVE OFF INTO THE SUNSET.
+""")
+    input("PRESS ENTER TO SHUTDOWN THE GAME")
+    quit()
+
+    
+def print_map():
+    print("+---------------------+--+-------------------------------------------------------------------------------------------------------+--+--+--+--+--+")
+    print("|    00      00       |  |        |BARMAN|                                                                              |-|      |  |  |  |  |  |")
+    print("|   +---+   +---+     +--------------------------------------------------------------+                                  |-|      +--+--+--+--+--+")
+    print("|00 |   |00 |   |00   +--------------------------------------------------------------+                                  |-|                     |")
+    print("|00 |   |00 |   |00                               BAR   0000000000000000|MATE|000000                                    |-|                     |")
+    print("|   +---+   +---+                                                       +----+                                          |-|                     |")
+    print("|     00     00                                               SETTING AREA                                              +------+    +-----------+")
+    print("|     00     00                                                                                                                                 |")
+    print("|   +---+   +---+                                                                                                             TOILET            |")
+    print("| 00|   |00 |   | 0+----+                                                                                                                       |")
+    print("| 00|   |00 |   | 0|GIRL|                                                                                                                       |")
+    print("|   +---+   +---+  +----+                                                                                                                       |")
+    print("|     00      00                                                                                                                                |")
+    print("|       TABLES                                                 BOOTHS                                                                           |")
+    print("|               ****+--+--+ +------+ +--+--+ +------+ +--+--+ +------+ +--+--+ +------+ +--+--+ +------+ +--+--+****                            |")
+    print("|               ****|  |  | |XXXXXX| |  |  | |XXXXXX| |  |  | |XXXXXX| |  |  | |XXXXXX| |  |  | |XXXXXX| |  |  |****                            |")
+    print("|               ****|  |  | |XXXXXX| |  |  | |XXXXXX| |  |  | |XXXXXX| |  |  | |XXXXXX| |  |  | |XXXXXX| |  |  |****                            |")
+    print("|               ****|  |  | |XXXXXX| |  |  | |XXXXXX| |  |  | |XXXXXX| |  |  | |XXXXXX| |  |  | |XXXXXX| |  |  |****                            |")
+    print("|               ****+-----+ +------+ +-----+ +------+ +-----+ +------+ +-----+ +------+ +-----+ +------+ +-----+****                            |")
+    print("+---------------------------------------------------------------------------------------------------------------------------    EXIT    +-------+")             
+    print("                                                                                                                                        |BOUNCER|")
+    print("                                                                                                                                        +-------+")
     
 
 
@@ -333,7 +364,10 @@ inventory = []
 
 # This is the entry point of our program
 def main():
-    print("""Your eyes slowly open as you regain consciousness, still pissed and spinning.
+    print("""
+INTRO.....
+
+Your eyes slowly open as you regain consciousness, still pissed and spinning.
 You’re sat at a pink leather booth.
 Around you are 4 mini-stages and 2 private rooms.
 There’s an exotic dancer entertaining countless eyes on the main stage.
@@ -351,6 +385,6 @@ He seems familiar.""")
         command = menu(current_area["items"], inventory , current_area["characters"])        
         # Execute the player's command
         execute_command(command)
-        print("##############################################################################################################")
+        print("######################################################################################################################################")
 
 main()
