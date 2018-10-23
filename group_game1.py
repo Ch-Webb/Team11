@@ -186,10 +186,10 @@ def execute_command(command):
             try:
                 execute_drop(command[1])
             except:
-                print("drop what?")
+                print("Drop what?")
                 input("------->PRESS ENTER TO CARRY ON<------")
         else:
-            print("drop what?")
+            print("Drop what?")
             input("------->PRESS ENTER TO CARRY ON<------")
     
     elif command[0] == "talk":
@@ -197,7 +197,7 @@ def execute_command(command):
             try:
                 execute_talk(command[1])
             except:
-                print("talk to who?")
+                print("Talk to who?")
                 input("------->PRESS ENTER TO CARRY ON<------")
         else:
             print("Talk to who?")
@@ -217,10 +217,10 @@ def execute_command(command):
             try:
                 execute_look(command[1])
             except:
-                print("look at who?")
+                print("Look at who?")
                 input("------->PRESS ENTER TO CARRY ON<------")
         else:
-            print("look at who?")
+            print("Look at who?")
             input("------->PRESS ENTER TO CARRY ON<------")   
     
 
@@ -231,12 +231,8 @@ def execute_command(command):
 
 def execute_look(character):
     a = characters[character]
-    print("there name is " + a["name"] + ", they area a " + a["description"])
+    print("Their name is " + a["name"] + ", they are a " + a["description"])
     input("------->PRESS ENTER TO CARRY ON<------")
-
-
-
-
 
 
 
@@ -252,10 +248,6 @@ def execute_buy():
         
     
 
-
-
-
-    
 
 def execute_talk(person):
     global inventory
@@ -288,7 +280,7 @@ def execute_talk(person):
         input("------->PRESS ENTER TO CARRY ON<------")
         return    
     else :
-        print("talk to who.....?")
+        print("Talk to who?")
         input("------->PRESS ENTER TO CARRY ON<------")
     
 
@@ -299,7 +291,7 @@ def execute_go(new_area):
     if new_area == "booth" or "bar" or "table" or "toilet"  or "seating":
         current_area = rooms[new_area]   
     else :
-        print("GO where....?")
+        print("Go where?")
         input("------->PRESS ENTER TO CARRY ON<------")
         
 def execute_take(item_id):         
