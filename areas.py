@@ -49,15 +49,20 @@ exit_area = {
     """You approach the green neon exit signs.
 There is a tall, handsome Russian man there.
 He seems aggressive. You try to leave.
-“I already told you: Not without a wallet and ID!”.
+“I already told you: Not without a wallet, keys and ID!”.
 He throws you back into the booth, and you loose consciousness.""",
 
-    "description_2":
+    "win_description":
     """
-The bouncer seems to have had enough with you.
-He grabs you and throws you through the window panes.
-It shatters and you land on the street, head spinning.
-A yellow taxi pulls up beside you, you run into it pulling the woman, half in, out. “GO!”.
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+CONGRATS!
+YOU HAVE DEFEATED THE BOUNCER, YOUR PHONE HAS BEEN RETURNED TO YOU
+YOU GRAB YOUR MATE AND GET IN TO THE CAB BUT JUST BEFORE YOU LEAVE A WOMAN SHOUTS OUT,
+ITS THE WOMAN FROM THE TABLE WHO YOU GOT THE NUMBER FROM.........
+"THANKS FOR DEFEATING THE BOUNCER HES WAS A TWAT" SHE SAYS TO YOU AND ASKED TO COME BACK TO YOURS
+UNDERSTANDING WHATS GOING ON YOU MATE JUMPS OUT THE CAB AND SAYS HE WILL BE FINE HES NOT IN A STATE LIKE YOU,
+WITH THIS YOU LEAVE AND DRIVE OFF INTO THE SUNSET.
+
     """,
     "items": [],
     "characters":[character_bouncer]

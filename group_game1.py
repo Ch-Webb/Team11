@@ -264,6 +264,7 @@ def execute_talk(person):
         if item_drink in inventory:
             print("print give girl drink")
             input("------->PRESS ENTER TO GIVE GIRL DRINK<------")
+            inventory.remove(item_drink)
             inventory.append(item_number)
         else:            
             print("PRINT GET GIRL NUMBERS SCRIPT")
@@ -288,8 +289,10 @@ def execute_talk(person):
 
 def execute_go(new_area):   
     global current_area
-    if new_area == "booth" or "bar" or "table" or "toilet"  or "seating":
-        current_area = rooms[new_area]   
+    if new_area == "booth" or "bar" or "table" or "toilet"  or "seating" or "exit":
+        
+        current_area = rooms[new_area]
+    
     else :
         print("Go where?")
         input("------->PRESS ENTER TO CARRY ON<------")
