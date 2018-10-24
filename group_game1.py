@@ -12,43 +12,70 @@ skip_words = ['a', 'about', 'all', 'an', 'another', 'any', 'around', 'at',
               'towards', 'until', 'us', 'want', 'we', 'what', 'when', 'why',
               'wish', 'with', 'would' , 'area', 'got','hot','cuite']
 def filter_words(words, skip_words):
+#This function filters all unnecessary words using the list "skip words"
+#and a list of words that has been split from the user input
+    #Create new empty array
     important_words = []
+    #Iterate through current list of words
     for i in words:
+        #If the word isnt an "unnecessary word", add it to the important list
         if i not in skip_words:
             important_words.append(i)
+    #output important list
     return important_words
+
 def remove_spaces(text):
+#This function removes all leading and trailing whitespace from the input
+    #Create a flag to check if the string actually contains letters in the first place
     letterFound = False
+    #iterate through each character in the text. If any one of them is a letter, proceed with the function
     for letter in text:
         if (letter.isalpha()) or (letter.isdigit()):
             letterFound = True
     if letterFound == True:
+        #Create two pointers, like how a queue structure works
         left = 0
         right = -1
+        #Trim each side of the string until a letter is found
         while text[left].isspace():
             left += 1
         while text[right].isspace():
             right -= 1
         right += 1
+        #Return the portion of the string that hasnt been trimmed
         return text[left:right or None]
     else:
+        #If the string doesnt actually contain any letters or digits, it will always
+        #evaluate to "" so just return ""
         return ""
+    
 def remove_punct(text):
+#This function removes all punctuation from an input string
+    #Set up an empty string for the output to be stored in    
     no_punct = ""
     for char in text:
+        #for each letter in the text, if its not in the predefined list of punctuation, add it to the output string
         if not (char in string.punctuation):
             no_punct = no_punct + char
+    #Then return the output string
     return no_punct
+
 def normalise_input(user_input):
+#This function combines remove_punct and remove_spaces, and converts all input to lower case, normalising it.
     # Remove punctuation and convert to lower case
     no_punct = remove_punct(user_input).lower()
+    #Remove leading and trailing whitespace
     no_spaces = remove_spaces(no_punct)
+    #Split into list by the remaining spaces
     list_of_words = no_spaces.split()
+    #Filter unnecessary words
     important_words = filter_words(list_of_words, skip_words)
+    #Return this normalised input
     return important_words
 
 
 def print_room(room):
+#This function displays all information about the room the user is in
     # Display room name
     print()
     print(room['name'].upper())
@@ -56,39 +83,55 @@ def print_room(room):
     # Display room description
     print(room["description"])
     print()
+    # Display room items
     print_room_items(room)
 
 def print_room_items(room):
+#This function displays all the items that are in a room
+    #Get the list of items from the dictionary room
     items = room["items"]
+    #Split into list
     items = list_of_items(items)
+    #If list is empty, return nothing
     if items == "":
         return
+    #Else, return what is in the room
     print("There is " + items + " here.")
     print("")
 
 def print_inventory_items(items):
+#This user displays all the items that the user is holding
+    #If you have no items, tell user you have no items
     if items == []:
         
         print("you have no items")
         print("")
+    #Else, print the list of items that you do have
     else:
         print("You have" + list_of_items(items)+ ".")
         print("")
 
 def list_of_items(items):
+#This function splits a dictionary list into a normal, presentable string (ie all items separated with commas, etc)
+    #Define empty output string
     list_of_things = ""
     x = 0
+    #For all items in the list "items"
     for i in items:
+        #Set i to the item name
         i = i["name"]
         x = x +1
+        #if the pointer is at the end of the list, only add the item with nothing else
         if x == 1 :
             list_of_things = list_of_things + i
+        #else, add the item, separated with a comma
         else:
             list_of_things = list_of_things + ", " + i
-                    
+    #Return the string of items
     return list_of_things
 
 def menu(room_items, inv_items, character):
+#This function displays the menu for the user and takes an input, normalising it and passing it out
     # Display menu
     print_menu(room_items, inv_items,character)
 
@@ -97,18 +140,21 @@ def menu(room_items, inv_items, character):
 
     # Normalise the input
     normalised_user_input = normalise_input(user_input)
-
+    #Return normalised input
     return normalised_user_input
 
 def print_menu(area_items, inv_items , characters):
+#This function displays all of the actions that the user can perform
     print("You can:")    
     # Print the exit name 
     print_exits()
+    #for each item in the area, display what can actually be done with it
     for i in area_items :
         if i == item_drink:
             print("BUY " + i["id"].upper() + " to take " + i["name"] + ".")
         else:
             print("TAKE " + i["id"].upper() + " to take " + i["name"] + ".")
+    #Offer option of dropping user items
     for i in inv_items :
         print("DROP " + i["id"].upper() + " to drop " + i["name"] + ".")
     if current_area == bar_area:
@@ -117,6 +163,8 @@ def print_menu(area_items, inv_items , characters):
         print("TALK to mate")
     if current_area == table_area:
         print("TALK to the girl")
+    if current_area == exit_area:
+        print("TALK to the bouncer")
     for i in characters:
         i = i["id"]
         print("LOOK AT " + i)
@@ -124,28 +172,32 @@ def print_menu(area_items, inv_items , characters):
     print("What do you want to do?")
     
 def print_exits():
+#This function displays all of the available areas for the user to travel to
+    #For all rooms, display each room
+    #Bar is open plan, user can travel anywhere from anywhere
     for key in rooms:
             print("GO TO "+ key)
 
 def execute_drop(item_id):
+#This function allows the user to drop any given item in their inventory
+    #Define flag to check if item is in inventory
     found = False
-    item = None
-    for key in inventory:
-        if item_id == key["id"]:
-            item = key
-        
+    #Search through inventory. If it's in there, remove from inventory and add to room's "inventory"
+    #Update flag to show it's been found
     for element in inventory:
         if item_id == element["id"]:
             inventory.remove(element)
             current_area["items"].append(element)
             found = True
+    #If item hasnt been found, it's not in the inventory and so cannot be dropped. Notify user.
     if found == False:
         print("You cannot drop that")
 
 def execute_command(command):
+#This function is the central hub for all commands. Any command the user makes is passed through here to a) check if it is valid and b) execute it
     if 0 == len(command):
         return
-
+    #Modular design is repeated for each command. Decide what the command is, execute the command, and make sure the user has given an operand.
     if command[0] == "go":
         if len(command) > 1:
             try:
@@ -212,12 +264,15 @@ def execute_command(command):
         input("------->PRESS ENTER TO CARRY ON<------")
 
 def execute_look(character):
+#This function allows the user to inspect each character, returning their name and description from the separate character file.
     a = characters[character]
     print("Their name is " + a["name"] + ", they are a " + a["description"])
     input("------->PRESS ENTER TO CARRY ON<------")
 
 def execute_buy():
+#This function allows the user to buy the drink from the barman
     global inventory
+    #If the user is in possession of their wallet and id, and they have spoken to the girl, allow them to buy the drink from the barman
     if item_wallet and item_id in inventory:
         if talk_too_girl == True:
             print("""
@@ -261,11 +316,12 @@ you pay and looking at it down it in one....... you idiot
 
 """)
             input("------->PRESS ENTER TO CARRY ON<------")
-    elif not (item_wallet and item_id in inventory) and talk_too_girl == False:
+    elif not (item_wallet and item_id in inventory):
         print("""'I TOLD YOU - NO MONEY, NO ID AND YOU'RE NOT GETTING A DRINK', the bartender says to you, looking rather annoyed""")
         input("------->PRESS ENTER TO CARRY ON<------")
         
 def execute_talk(person):
+#This function allows the user to speak to each different character.
     global inventory
     if person == "barman" and current_area == bar_area:
         if item_number in inventory: 
@@ -500,15 +556,18 @@ soft-spoken Russian face you’ve been seeing all night. You feel your knees wea
         print("Talk to who?")
         input("------->PRESS ENTER TO CARRY ON<------")
 
-def execute_go(new_area):   
+def execute_go(new_area):
+#This function allows a user to move around the area
     global current_area
-    if new_area == "booth" or "bar" or "table" or "toilet"  or "seating":
+    #If the new area exists, move them there
+    if new_area == "booth" or "bar" or "table" or "toilet"  or "seating" or "exit":
         current_area = rooms[new_area]
     else :
         print("Go where?")
         input("------->PRESS ENTER TO CARRY ON<------")
         
-def execute_take(item_id):         
+def execute_take(item_id):
+#This function allows a user to pick up various items
     x = 0
     y= -1
     print("")

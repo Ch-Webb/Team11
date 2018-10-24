@@ -1,19 +1,19 @@
 character_friend = {
     "id": "mate",
 
-    "name": "Jackson",
+    "name": "Kameron",
 
     "description":
-    """Your rich, very drunk friend who seems to have a thing for strong spirits"""
+    """Your rich, very drunk friend who seems to have a thing for strong spirits."""
 }
 
 character_bartender = {
     "id": "bartender",
 
-    "name": "Emily",
+    "name": "K Sidorov",
 
     "description":
-    "Flirty female bartender who isn't afraid to hand out multiple drinks"
+    "Strong, soft spoken bartender who looks tough on the outside but is actually a real softie."
 }
 
 character_bouncer = {
@@ -28,9 +28,9 @@ character_bouncer = {
 character_girl = {
     "id": "girl",
 
-    "name": "Meghan",
+    "name": "Kirillina",
 
-    "description": "Slim blonde girl who seems to be making eye contact with you."
+    "description": "A quiet girl, russian girl. She reminds you of someone..."
 }
 
 characters = {
