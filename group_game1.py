@@ -220,7 +220,6 @@ def execute_buy():
     global inventory
     if item_wallet and item_id in inventory:
         if talk_too_girl == True:
-
             print("""
 You wander over to the bar and lean on it, the room spinning around you. The bartender wanders back over with an arm full of empty VKs and tips them into the bin.
 
@@ -262,8 +261,8 @@ you pay and looking at it down it in one....... you idiot
 
 """)
             input("------->PRESS ENTER TO CARRY ON<------")
-    else:
-        print("""I TOLD YOU, NO MONEY AND NO ID AND YOUR NOT GETTING A DRINK, the bartender says to you looking very annoyed""")
+    elif not (item_wallet and item_id in inventory) and talk_too_girl == False:
+        print("""'I TOLD YOU - NO MONEY, NO ID AND YOU'RE NOT GETTING A DRINK', the bartender says to you, looking rather annoyed""")
         input("------->PRESS ENTER TO CARRY ON<------")
         
 def execute_talk(person):
@@ -332,7 +331,7 @@ Then again, people say that you and your mate look alike, but you’ve never see
         talk_too_girl = True
         if item_drink in inventory:
             print("""
-You approach the girl on the dancefloor again and she turns to face you with a glint him her bespectacled eyes.
+You approach the girl on the dancefloor again and she turns to face you with a glint in her bespectacled eyes.
 
 She asks in a vaguely Russian accent, “Is that for me?”
 
@@ -382,7 +381,7 @@ He shouts in slightly accented English over the blaring music.
 
         if item_mates_id in inventory:
             input("------->PRESS ENTER TO GIVE HIM HIS ID<------")
-            print("As he reaches to put away his id he relises that he already has an id, your id, as well as your wallet.")
+            print("As he reaches to put away his id he realises that he already has an id, your id, as well as your wallet.")
             print("""You look wrecked mate, you should probably get going home. You dropped your wallet and your keys earlier and then wandered off, so I grabbed them for you. Here you go!”
 
 He hands over the keys and the wallet. Opening your wallet, you see your ID, confirming you are indeed over 18.
@@ -396,7 +395,6 @@ You thank him quietly, trying to remember what else you needed before you could 
         return
 
     elif person == "bouncer" and current_area == exit_area :
-
         print("""
 You approach one of the bouncers, an average height, dark haired bloke. He turns to face you, revealing square glasses and a light dusting of hair on his chin.
 
@@ -436,9 +434,69 @@ In your drunken mind, there’s only one way this is going to end. A showdown wi
 
 You hear the Pokémon combat music play in your head and raise your fists.
 """)
+        input("------->PRESS ENTER TO CARRY ON<------")
+        print("""You can:
+    >Punch
+    >Kick
+    >Run
+""")
+        won = False
+        rand = random.randint(1,3)
+        print(rand)
+        print("What will you do?")
+        usermove = input()
+        usermove = normalise_input(usermove)
+        if usermove == "punch":
+            if rand == 1:
+                won = True                
+        elif usermove == "kick":
+            if rand == 2:
+                won = True               
+        elif usermove == "run":
+            if rand == 3:
+                won = True
+                
+        else:
+            print("")
+            print("THAT DID NOT WORK")
+            print("")
+        if won == True:
+            print("YOUR MOVE WORKS")
+            input("------->PRESS ENTER TO CARRY ON<------")
+            print("""
+“You…you win…” he manages to mutter, fumbling your phone out of his pocket.
 
+As you pick it up, the door of the bar bursts open as the loud, thunderous beat of the Russian National Anthem fills your ears.
 
-    else :
+Your chest fills with the pride of a nation, you have defeated one of its greatest representatives in the Western world.
+
+The bartender, your friend, the bearded girl and everyone streams out to congratulate you, baptizing you in a stream of the purest Vodka you’ve ever tasted.
+
+As the holy liquid covers you and pools around your feet, the crowd suddenly begins to chant ‘One of us….One of us…..’
+
+You look down, catching a glimpse of your reflection in the glistening liquid. Gone were your mediocre English features, replaced by the features of a small,
+
+soft-spoken Russian face you’ve been seeing all night. You feel your knees weaken, your hands shaking as your lips part to mutter out the new name you’ve inherited.
+
+“My name is…..Kirril…..Sidorov….
+""")
+
+            input("------->PRESS ENTER TO GO HOME<------")
+
+            print("""
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        CONGRATS!
+        YOUR PHONE HAS BEEN RETURNED TO YOU
+        YOU GRAB YOUR MATE AND GET IN TO THE CAB BUT JUST BEFORE YOU LEAVE A WOMAN SHOUTS OUT,
+        ITS THE WOMAN FROM THE TABLE WHO YOU GOT THE NUMBER FROM.........
+        "THANKS FOR DEFEATING THE BOUNCER HES WAS A TWAT" SHE SAYS TO YOU AND ASKED TO COME BACK TO YOURS
+        UNDERSTANDING WHATS GOING ON YOU MATE JUMPS OUT THE CAB AND SAYS HE WILL BE FINE HES NOT IN A STATE LIKE YOU,
+        WITH THIS YOU LEAVE AND DRIVE OFF INTO THE SUNSET.
+""")
+            input("PRESS ENTER TO SHUTDOWN THE GAME")
+            quit()
+
+    else:
         print("Talk to who?")
         input("------->PRESS ENTER TO CARRY ON<------")
 
@@ -446,8 +504,6 @@ def execute_go(new_area):
     global current_area
     if new_area == "booth" or "bar" or "table" or "toilet"  or "seating":
         current_area = rooms[new_area]
-    elif new_area == "exit":
-        fight()
     else :
         print("Go where?")
         input("------->PRESS ENTER TO CARRY ON<------")
@@ -468,67 +524,6 @@ def execute_take(item_id):
         print("You cannot take that.")
         input("------->PRESS ENTER TO CARRY ON<------")
 
-def fight():
-    global won
-    
-    while won == False:
-        print("""You can:
-    >Punch
-    >Kick
-    >Run
-""")
-        rand = random.randint(1,3)
-        print("What will you do?")
-        usermove = input()
-        usermove = normalise_input(usermove)
-        if usermove == "punch":
-            if rand == 1:
-                won = True                
-        elif usermove == "kick":
-            if rand == 2:
-                won = True               
-        elif usermove == "run":
-            if rand == 3:
-                won = True
-                
-        else:
-            print("I do not understand")
-        print("")
-        print("THAT DID NOT WORK")
-        print("")
-    print("""
-“You…you win…” he manages to mutter, fumbling your phone out of his pocket.
-
-As you pick it up, the door of the bar bursts open as the loud, thunderous beat of the Russian National Anthem fills your ears.
-
-Your chest fills with the pride of a nation, you have defeated one of its greatest representatives in the Western world.
-
-The bartender, your friend, the bearded girl and everyone streams out to congratulate you, baptizing you in a stream of the purest Vodka you’ve ever tasted.
-
-As the holy liquid covers you and pools around your feet, the crowd suddenly begins to chant ‘One of us….One of us…..’
-
-You look down, catching a glimpse of your reflection in the glistening liquid. Gone were your mediocre English features, replaced by the features of a small,
-
-soft-spoken Russian face you’ve been seeing all night. You feel your knees weaken, your hands shaking as your lips part to mutter out the new name you’ve inherited.
-
-“My name is…..Kirril…..Sidorov….
-""")
-
-    input("------->PRESS ENTER TO GO HOME<------")
-
-    print("""
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                        CONGRATS!
-        YOUR PHONE HAS BEEN RETURNED TO YOU
-        YOU GRAB YOUR MATE AND GET IN TO THE CAB BUT JUST BEFORE YOU LEAVE A WOMAN SHOUTS OUT,
-        ITS THE WOMAN FROM THE TABLE WHO YOU GOT THE NUMBER FROM.........
-        "THANKS FOR DEFEATING THE BOUNCER HES WAS A TWAT" SHE SAYS TO YOU AND ASKED TO COME BACK TO YOURS
-        UNDERSTANDING WHATS GOING ON YOU MATE JUMPS OUT THE CAB AND SAYS HE WILL BE FINE HES NOT IN A STATE LIKE YOU,
-        WITH THIS YOU LEAVE AND DRIVE OFF INTO THE SUNSET.
-""")
-    input("PRESS ENTER TO SHUTDOWN THE GAME")
-    quit()
-
     
 def print_map():
     print("+---------------------+--+-------------------------------------------------------------------------------------------------------+--+--+--+--+--+")
@@ -537,7 +532,7 @@ def print_map():
     print("|00 |   |00 |   |00   +--------------------------------------------------------------+                                  |-|                     |")
     print("|00 |   |00 |   |00                               BAR   0000000000000000|MATE|000000                                    |-|                     |")
     print("|   +---+   +---+                                                       +----+                                          |-|                     |")
-    print("|     00     00                                               SETTING AREA                                              +------+    +-----------+")
+    print("|     00     00                                               SEATING AREA                                              +------+    +-----------+")
     print("|     00     00                                                                                                                                 |")
     print("|   +---+   +---+                                                                                                             TOILET            |")
     print("| 00|   |00 |   | 0+----+                                                                                                                       |")
