@@ -274,7 +274,7 @@ def execute_buy():
     global inventory
     #If the user is in possession of their wallet and id, and they have spoken to the girl, allow them to buy the drink from the barman
     if item_wallet and item_id in inventory:
-        if talk_too_girl == True:
+        if talked_to_girl == True:
             print("""
 You wander over to the bar and lean on it, the room spinning around you. The bartender wanders back over with an arm full of empty VKs and tips them into the bin.
 
@@ -297,6 +297,7 @@ You nod, grabbing the drink as he sets it down on the bar.
 “I’ll be back with her number in a minute,” you say, wandering away from the bar.
             """)
             input("------->PRESS ENTER TO CARRY ON<------")
+            #In line with story, add drink to inventory
             inventory.append(item_drink)
         else:
 
@@ -317,6 +318,7 @@ you pay and looking at it down it in one....... you idiot
 """)
             input("------->PRESS ENTER TO CARRY ON<------")
     elif not (item_wallet and item_id in inventory):
+        #Refuse service to player who doesn't have wallet and id
         print("""'I TOLD YOU - NO MONEY, NO ID AND YOU'RE NOT GETTING A DRINK', the bartender says to you, looking rather annoyed""")
         input("------->PRESS ENTER TO CARRY ON<------")
         
@@ -324,7 +326,8 @@ def execute_talk(person):
 #This function allows the user to speak to each different character.
     global inventory
     if person == "barman" and current_area == bar_area:
-        if item_number in inventory: 
+        if item_number in inventory:
+            #If user has the number item, continue story
             print("""
 You wander back to the bar yet again and lean on it, calling the bartender back over. He practically sprints back over, hope in his eyes.
 
@@ -351,6 +354,7 @@ He takes out his phone and keys in the number, saving it into his contacts, ramb
 You turn from the bar and wander away. Time to get your phone off Kirill the Bouncer and go home, be sick into your toilet and pass out on the bedroom floor with your feet up the wall.
 """)
             input("------->PRESS ENTER TO GIVE BARMAN THE GIRL'S NUMBER<------")
+            #Remove the number from inventory
             inventory.remove(item_number)           
         else:         
             print("""You approach the bartender and look him up and down. You notice a small name tag on his black shirt that reads “K Sidorov.”
@@ -377,14 +381,16 @@ He flicks his glance towards the table area, pointing towards a certain individu
 
 “See that girl at the table? I’ve been trying to get her number all night but I can’t get out from behind this damn bar. You get me her number, I’ll see if I can find out where your phone is. Fair?”
 
-You sigh, slightly, then nod your head. You couldn’t help thinking that Kirill looked a bit like your mate.
+You sigh, slightly, then nod your head. You couldn’t help thinking that K Sidorov looked a bit like your mate.
 
 Then again, people say that you and your mate look alike, but you’ve never seen it. Time to go get the bartender that girls number, you suppose. """)
-            talk_too_girl = True
             input("------->PRESS ENTER TO CARRY ON<------")
         return
+    #If speaking to the girl
     elif person == "girl" and current_area ==  table_area :
-        talk_too_girl = True
+        #Flag that user has spoken to character
+        talked_to_girl = True
+        #If user has the drink item, continue story
         if item_drink in inventory:
             print("""
 You approach the girl on the dancefloor again and she turns to face you with a glint in her bespectacled eyes.
@@ -402,10 +408,11 @@ You nod your thanks and take your leave as the bearded girl continues to dance. 
 
 """)
             input("------->PRESS ENTER TO GIVE GIRL DRINK<------")
+            #Remove drink, give number
             inventory.remove(item_drink)
             inventory.append(item_number)
         else:
-            talk_too_girl = True
+            talked_to_girl = True
             print("""You approach the girl the bartender pointed out and attempt to strike up a conversation. She eventually turns to you and peers at you through her glasses.
 
 “Oh hello! Having a nice night?”
@@ -421,6 +428,7 @@ And with that, she turned back towards the speakers near the tables and carried 
 You roll your eyes and glance toward the bartender. You just want to go home and pass out already.""")
             input("------->PRESS ENTER TO CARRY ON<------")
         return
+    #If speaking to friend, give user story hint
     elif person == "mate" and current_area == seating_area :
         print("""
 You approach your friend on the dance floor, the pounding techno making your teeth rattle in your head.
@@ -434,7 +442,8 @@ He shouts in slightly accented English over the blaring music.
 "I'VE LOST MY ID" he says to you, "can you help me find it?"
 """)
         input("------->PRESS ENTER TO CARRY ON<------")
-
+        
+        #If user has "mates id", continue story
         if item_mates_id in inventory:
             input("------->PRESS ENTER TO GIVE HIM HIS ID<------")
             print("As he reaches to put away his id he realises that he already has an id, your id, as well as your wallet.")
@@ -492,31 +501,15 @@ You hear the Pokémon combat music play in your head and raise your fists.
 """)
         input("------->PRESS ENTER TO CARRY ON<------")
         print("""You can:
-    >Punch
-    >Kick
-    >Run
+    >PRESS 1 to Punch
+    >PRESS 2 to Kick
+    >PRESS 3 to RUN
 """)
-        won = False
         rand = random.randint(1,3)
         print(rand)
         print("What will you do?")
-        usermove = input()
-        usermove = normalise_input(usermove)
-        if usermove == "punch":
-            if rand == 1:
-                won = True                
-        elif usermove == "kick":
-            if rand == 2:
-                won = True               
-        elif usermove == "run":
-            if rand == 3:
-                won = True
-                
-        else:
-            print("")
-            print("THAT DID NOT WORK")
-            print("")
-        if won == True:
+        usermove = input(">")
+        if usermove == rand:
             print("YOUR MOVE WORKS")
             input("------->PRESS ENTER TO CARRY ON<------")
             print("""
@@ -528,7 +521,7 @@ Your chest fills with the pride of a nation, you have defeated one of its greate
 
 The bartender, your friend, the bearded girl and everyone streams out to congratulate you, baptizing you in a stream of the purest Vodka you’ve ever tasted.
 
-As the holy liquid covers you and pools around your feet, the crowd suddenly begins to chant ‘One of us….One of us…..’
+As the holy liquid covers you and pools around your feet, the crowd suddenly begins to chant ‘One of us...One of us...’
 
 You look down, catching a glimpse of your reflection in the glistening liquid. Gone were your mediocre English features, replaced by the features of a small,
 
@@ -543,15 +536,14 @@ soft-spoken Russian face you’ve been seeing all night. You feel your knees wea
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////
                         CONGRATS!
         YOUR PHONE HAS BEEN RETURNED TO YOU
-        YOU GRAB YOUR MATE AND GET IN TO THE CAB BUT JUST BEFORE YOU LEAVE A WOMAN SHOUTS OUT,
-        ITS THE WOMAN FROM THE TABLE WHO YOU GOT THE NUMBER FROM.........
-        "THANKS FOR DEFEATING THE BOUNCER HES WAS A TWAT" SHE SAYS TO YOU AND ASKED TO COME BACK TO YOURS
-        UNDERSTANDING WHATS GOING ON YOU MATE JUMPS OUT THE CAB AND SAYS HE WILL BE FINE HES NOT IN A STATE LIKE YOU,
-        WITH THIS YOU LEAVE AND DRIVE OFF INTO THE SUNSET.
 """)
             input("PRESS ENTER TO SHUTDOWN THE GAME")
             quit()
-
+               
+        else:
+            print("")
+            print("THAT DID NOT WORK")
+            print("")
     else:
         print("Talk to who?")
         input("------->PRESS ENTER TO CARRY ON<------")
@@ -585,6 +577,7 @@ def execute_take(item_id):
 
     
 def print_map():
+#This function prints a map of the area for the user to inspect.
     print("+---------------------+--+-------------------------------------------------------------------------------------------------------+--+--+--+--+--+")
     print("|    00      00       |  |        |BARMAN|                                                                              |-|      |  |  |  |  |  |")
     print("|   +---+   +---+     +--------------------------------------------------------------+                                  |-|      +--+--+--+--+--+")
@@ -613,7 +606,7 @@ def print_map():
 
 current_area = booth_area
 inventory = []
-talk_too_girl = False
+talked_to_girl = False
 
 
 
