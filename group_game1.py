@@ -509,6 +509,7 @@ You hear the Pokémon combat music play in your head and raise your fists.
 
 
 def fight():
+    won = False
     input("------->PRESS ENTER TO CARRY ON<------")
     print("""You can:
     >PRESS 1 to Punch
@@ -516,10 +517,35 @@ def fight():
     >PRESS 3 to RUN
 """)
     rand = random.randint(1,3)
-    print(rand)
     print("What will you do?")
     usermove = input(">")
-    if usermove = rand:
+    if usermove == "1":
+        if rand == 1:
+            won = True
+        else:
+            print("")
+            print("THAT DID NOT WORK")
+            print("")
+            return False
+    elif usermove == "2":
+        if rand == 2:
+            won = True
+        else:
+            print("")
+            print("THAT DID NOT WORK")
+            print("")
+            return False
+    elif usermove == "3":
+        if rand == 3:
+            won = True
+        else:
+            print("")
+            print("THAT DID NOT WORK")
+            print("")
+            return False    
+    else:
+        print("I do not understand")
+    if won == True:
         print("YOUR MOVE WORKS")
         input("------->PRESS ENTER TO CARRY ON<------")
         print("""
@@ -542,11 +568,7 @@ soft-spoken Russian face you’ve been seeing all night. You feel your knees wea
 
         input("------->PRESS ENTER TO GO HOME<------")
 
-        print("""
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                        CONGRATS!
-        YOUR PHONE HAS BEEN RETURNED TO YOU
-""")
+        
         input("PRESS ENTER TO SHUTDOWN THE GAME")
         quit()
                
@@ -555,6 +577,7 @@ soft-spoken Russian face you’ve been seeing all night. You feel your knees wea
         print("THAT DID NOT WORK,TRY AGAIN")
         print("")
         return False
+    
 
 
 
