@@ -272,9 +272,13 @@ def execute_look(character):
 def execute_buy():
 #This function allows the user to buy the drink from the barman
     global inventory
+    global talked_to_girl
     #If the user is in possession of their wallet and id, and they have spoken to the girl, allow them to buy the drink from the barman
     if item_wallet and item_id in inventory:
+        print("1")
+        print(talked_to_girl)
         if talked_to_girl == True:
+            print("2")
             print("""
 You wander over to the bar and lean on it, the room spinning around you. The bartender wanders back over with an arm full of empty VKs and tips them into the bin.
 
@@ -312,7 +316,7 @@ calling the bartender over
 
 he pours your drink and slides it too you
 
-you pay and looking at it down it in one....... you idiot
+you pay and looking at makes you feel sick.....you down it in one
 
 
 """)
@@ -388,6 +392,7 @@ Then again, people say that you and your mate look alike, but you’ve never see
         return
     #If speaking to the girl
     elif person == "girl" and current_area ==  table_area :
+        global talked_to_girl
         #Flag that user has spoken to character
         talked_to_girl = True
         #If user has the drink item, continue story
@@ -499,20 +504,25 @@ In your drunken mind, there’s only one way this is going to end. A showdown wi
 
 You hear the Pokémon combat music play in your head and raise your fists.
 """)
-        input("------->PRESS ENTER TO CARRY ON<------")
-        print("""You can:
+        while fight() == False:
+             fight()
+
+
+def fight():
+    input("------->PRESS ENTER TO CARRY ON<------")
+    print("""You can:
     >PRESS 1 to Punch
     >PRESS 2 to Kick
     >PRESS 3 to RUN
 """)
-        rand = random.randint(1,3)
-        print(rand)
-        print("What will you do?")
-        usermove = input(">")
-        if usermove == rand:
-            print("YOUR MOVE WORKS")
-            input("------->PRESS ENTER TO CARRY ON<------")
-            print("""
+    rand = random.randint(1,3)
+    print(rand)
+    print("What will you do?")
+    usermove = input(">")
+    if usermove = rand:
+        print("YOUR MOVE WORKS")
+        input("------->PRESS ENTER TO CARRY ON<------")
+        print("""
 “You…you win…” he manages to mutter, fumbling your phone out of his pocket.
 
 As you pick it up, the door of the bar bursts open as the loud, thunderous beat of the Russian National Anthem fills your ears.
@@ -530,23 +540,23 @@ soft-spoken Russian face you’ve been seeing all night. You feel your knees wea
 “My name is…..Kirril…..Sidorov….
 """)
 
-            input("------->PRESS ENTER TO GO HOME<------")
+        input("------->PRESS ENTER TO GO HOME<------")
 
-            print("""
+        print("""
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////
                         CONGRATS!
         YOUR PHONE HAS BEEN RETURNED TO YOU
 """)
-            input("PRESS ENTER TO SHUTDOWN THE GAME")
-            quit()
+        input("PRESS ENTER TO SHUTDOWN THE GAME")
+        quit()
                
-        else:
-            print("")
-            print("THAT DID NOT WORK")
-            print("")
     else:
-        print("Talk to who?")
-        input("------->PRESS ENTER TO CARRY ON<------")
+        print("")
+        print("THAT DID NOT WORK,TRY AGAIN")
+        print("")
+        return False
+
+
 
 def execute_go(new_area):
 #This function allows a user to move around the area
